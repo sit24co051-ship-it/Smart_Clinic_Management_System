@@ -1,0 +1,67 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart Clinic - Admin Login</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #eef4f8;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+        .login-box {
+            background: white;
+            width: 340px;
+            padding: 32px;
+            border-radius: 12px;
+            box-shadow: 0 8px 24px #00000018;
+        }
+        h1 { color: #176b68; text-align: center; }
+        p { color: #667085; text-align: center; }
+        label { display: block; margin-top: 18px; }
+        input {
+            box-sizing: border-box;
+            width: 100%;
+            padding: 12px;
+            margin-top: 7px;
+            border: 1px solid #ccd5df;
+            border-radius: 6px;
+        }
+        button {
+            width: 100%;
+            margin-top: 24px;
+            padding: 12px;
+            background: #176b68;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+        }
+        .note { font-size: 12px; margin-top: 18px; }
+    </style>
+</head>
+<body>
+    <main class="login-box">
+        <h1>Smart Clinic</h1>
+        <p>Administrator Portal</p>
+        <form onsubmit="event.preventDefault(); alert('Demo screen only. Authentication is not configured.');">
+            <label for="email">Admin Email</label>
+            <input id="email" type="email"
+                   placeholder="Enter admin email" required>
+
+            <label for="password">Password</label>
+            <input id="password" type="password"
+                   placeholder="Enter password" required>
+
+            <button type="submit">Sign In</button>
+        </form>
+        <p class="note">Authorized clinic administrators only</p>
+    </main>
+</body>
+</html>
