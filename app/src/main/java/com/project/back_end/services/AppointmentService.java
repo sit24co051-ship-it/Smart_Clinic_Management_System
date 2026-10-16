@@ -1,4 +1,3 @@
-```java
 package com.project.back_end.services;
 
 import com.project.back_end.models.Appointment;
@@ -76,4 +75,3 @@ public class AppointmentService {
         return true;
     }
 }
-```
