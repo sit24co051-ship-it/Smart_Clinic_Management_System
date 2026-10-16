@@ -1,8 +1,8 @@
-
 package com.project.back_end.controllers;
 
 import com.project.back_end.models.Prescription;
 import com.project.back_end.models.PrescriptionRepository;
+import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -21,8 +21,8 @@ public class PrescriptionController {
     }
 
     @GetMapping
-    public List<Prescription> getAllPrescriptions() {
-        return prescriptionRepository.findAll();
+    public ResponseEntity<List<Prescription>> getAllPrescriptions() {
+        return ResponseEntity.ok(prescriptionRepository.findAll());
     }
 
     @GetMapping("/{id}")
@@ -33,9 +33,17 @@ public class PrescriptionController {
                 .orElseGet(() -> ResponseEntity.notFound().build());
     }
 
+    @GetMapping("/appointment/{appointmentId}")
+    public ResponseEntity<List<Prescription>> getPrescriptionsByAppointment(
+            @PathVariable Long appointmentId) {
+        return ResponseEntity.ok(
+                prescriptionRepository
+                        .findByAppointment_AppointmentId(appointmentId));
+    }
+
     @PostMapping
     public ResponseEntity<Prescription> createPrescription(
-            @RequestBody Prescription prescription) {
+            @Valid @RequestBody Prescription prescription) {
         Prescription saved = prescriptionRepository.save(prescription);
         return ResponseEntity.status(HttpStatus.CREATED).body(saved);
     }
