@@ -1,7 +1,10 @@
-
+```java
 package com.project.back_end.models;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
@@ -14,12 +17,18 @@ public class Patient {
     @Column(name = "patient_id")
     private Long patientId;
 
+    @NotBlank
+    @Size(max = 100)
     @Column(name = "full_name", nullable = false, length = 100)
     private String fullName;
 
+    @NotBlank
+    @Email
+    @Size(max = 150)
     @Column(nullable = false, unique = true, length = 150)
     private String email;
 
+    @Size(max = 20)
     @Column(length = 20)
     private String phone;
 
@@ -76,3 +85,4 @@ public class Patient {
         return createdAt;
     }
 }
+```
