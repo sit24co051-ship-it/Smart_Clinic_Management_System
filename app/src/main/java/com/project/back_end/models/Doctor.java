@@ -1,7 +1,11 @@
-
+```java
 package com.project.back_end.models;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.PositiveOrZero;
 import java.math.BigDecimal;
 
 @Entity
@@ -13,18 +17,24 @@ public class Doctor {
     @Column(name = "doctor_id")
     private Long doctorId;
 
+    @NotBlank
     @Column(name = "full_name", nullable = false, length = 100)
     private String fullName;
 
+    @NotBlank
     @Column(nullable = false, length = 100)
     private String specialization;
 
+    @NotBlank
+    @Email
     @Column(nullable = false, unique = true, length = 150)
     private String email;
 
     @Column(length = 20)
     private String phone;
 
+    @NotNull
+    @PositiveOrZero
     @Column(name = "consultation_fee", nullable = false,
             precision = 10, scale = 2)
     private BigDecimal consultationFee;
@@ -90,3 +100,4 @@ public class Doctor {
         this.consultationFee = consultationFee;
     }
 }
+```
