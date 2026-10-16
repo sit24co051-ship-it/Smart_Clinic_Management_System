@@ -30,6 +30,9 @@ public class Appointment {
     @Column(length = 255)
     private String reason;
 
+    @Column(name = "created_at", insertable = false, updatable = false)
+    private LocalDateTime createdAt;
+
     public Appointment() {
     }
 
@@ -71,8 +74,7 @@ public class Appointment {
         return appointmentDateTime;
     }
 
-    public void setAppointmentDateTime(
-            LocalDateTime appointmentDateTime) {
+    public void setAppointmentDateTime(LocalDateTime appointmentDateTime) {
         this.appointmentDateTime = appointmentDateTime;
     }
 
@@ -90,5 +92,9 @@ public class Appointment {
 
     public void setReason(String reason) {
         this.reason = reason;
+    }
+
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
     }
 }
