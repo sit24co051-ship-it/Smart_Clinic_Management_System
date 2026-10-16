@@ -29,7 +29,26 @@ public class DoctorService {
         return doctorRepository.save(doctor);
     }
 
-    public void deleteDoctor(Long doctorId) {
+    public Doctor updateDoctor(Long doctorId, Doctor updatedDoctor) {
+        return doctorRepository.findById(doctorId)
+                .map(existing -> {
+                    existing.setFullName(updatedDoctor.getFullName());
+                    existing.setSpecialization(updatedDoctor.getSpecialization());
+                    existing.setEmail(updatedDoctor.getEmail());
+                    existing.setPhone(updatedDoctor.getPhone());
+                    existing.setConsultationFee(
+                            updatedDoctor.getConsultationFee());
+                    return doctorRepository.save(existing);
+                })
+                .orElse(null);
+    }
+
+    public boolean deleteDoctor(Long doctorId) {
+        if (!doctorRepository.existsById(doctorId)) {
+            return false;
+        }
+
         doctorRepository.deleteById(doctorId);
+        return true;
     }
 }
