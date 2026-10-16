@@ -1,7 +1,10 @@
-
+```java
 package com.project.back_end.models;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+
 import java.time.LocalDateTime;
 
 @Entity
@@ -13,17 +16,21 @@ public class Prescription {
     @Column(name = "prescription_id")
     private Long prescriptionId;
 
+    @NotNull
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "appointment_id", nullable = false)
     private Appointment appointment;
 
-    @Column(name = "medication_details", nullable = false, columnDefinition = "TEXT")
+    @NotBlank
+    @Column(name = "medication_details",
+            nullable = false, columnDefinition = "TEXT")
     private String medicationDetails;
 
     @Column(columnDefinition = "TEXT")
     private String notes;
 
-    @Column(name = "prescribed_at", insertable = false, updatable = false)
+    @Column(name = "prescribed_at",
+            insertable = false, updatable = false)
     private LocalDateTime prescribedAt;
 
     public Prescription() {
@@ -65,3 +72,4 @@ public class Prescription {
         return prescribedAt;
     }
 }
+```
