@@ -1,4 +1,3 @@
-```java
 package com.project.back_end.services;
 
 import com.project.back_end.models.Doctor;
@@ -72,4 +71,3 @@ public class DoctorService {
         return true;
     }
 }
-```
