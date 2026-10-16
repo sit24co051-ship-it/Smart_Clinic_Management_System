@@ -1,7 +1,10 @@
-
+```java
 package com.project.back_end.models;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
 import java.time.LocalDateTime;
 
 @Entity
@@ -13,20 +16,26 @@ public class Appointment {
     @Column(name = "appointment_id")
     private Long appointmentId;
 
+    @NotNull
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "patient_id", nullable = false)
     private Patient patient;
 
+    @NotNull
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "doctor_id", nullable = false)
     private Doctor doctor;
 
+    @NotNull
     @Column(name = "appointment_datetime", nullable = false)
     private LocalDateTime appointmentDateTime;
 
+    @NotBlank
+    @Size(max = 20)
     @Column(nullable = false, length = 20)
     private String status = "BOOKED";
 
+    @Size(max = 255)
     @Column(length = 255)
     private String reason;
 
@@ -98,3 +107,4 @@ public class Appointment {
         return createdAt;
     }
 }
+```
