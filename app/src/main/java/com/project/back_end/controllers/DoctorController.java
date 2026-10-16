@@ -2,7 +2,9 @@
 package com.project.back_end.controllers;
 
 import com.project.back_end.models.Doctor;
-import com.project.back_end.models.DoctorRepository;
+import com.project.back_end.services.DoctorService;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -11,30 +13,52 @@ import java.util.List;
 @RequestMapping("/api/doctors")
 public class DoctorController {
 
-    private final DoctorRepository doctorRepository;
+    private final DoctorService doctorService;
 
-    public DoctorController(DoctorRepository doctorRepository) {
-        this.doctorRepository = doctorRepository;
+    public DoctorController(DoctorService doctorService) {
+        this.doctorService = doctorService;
     }
 
     @GetMapping
-    public List<Doctor> getDoctors(
-            @RequestParam(required = false) String specialty) {
+    public List<Doctor> getAllDoctors() {
+        return doctorService.getAllDoctors();
+    }
 
-        List<Doctor> doctors = doctorRepository.findAll();
-
-        if (specialty == null || specialty.isBlank()) {
-            return doctors;
-        }
-
-        return doctors.stream()
-                .filter(doctor -> doctor.getSpecialization()
-                        .equalsIgnoreCase(specialty))
-                .toList();
+    @GetMapping("/{id}")
+    public ResponseEntity<Doctor> getDoctorById(@PathVariable Long id) {
+        return doctorService.getDoctorById(id)
+                .map(ResponseEntity::ok)
+                .orElseGet(() -> ResponseEntity.notFound().build());
     }
 
     @PostMapping
-    public Doctor addDoctor(@RequestBody Doctor doctor) {
-        return doctorRepository.save(doctor);
+    public ResponseEntity<Doctor> addDoctor(@RequestBody Doctor doctor) {
+        Doctor savedDoctor = doctorService.saveDoctor(doctor);
+        return ResponseEntity.status(HttpStatus.CREATED).body(savedDoctor);
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<Doctor> updateDoctor(
+            @PathVariable Long id,
+            @RequestBody Doctor doctor) {
+
+        Doctor updatedDoctor = doctorService.updateDoctor(id, doctor);
+
+        if (updatedDoctor == null) {
+            return ResponseEntity.notFound().build();
+        }
+
+        return ResponseEntity.ok(updatedDoctor);
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteDoctor(@PathVariable Long id) {
+        boolean deleted = doctorService.deleteDoctor(id);
+
+        if (!deleted) {
+            return ResponseEntity.notFound().build();
+        }
+
+        return ResponseEntity.noContent().build();
     }
 }
