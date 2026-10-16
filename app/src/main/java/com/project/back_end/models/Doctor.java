@@ -1,4 +1,4 @@
-```java
+
 package com.project.back_end.models;
 
 import jakarta.persistence.*;
@@ -100,4 +100,3 @@ public class Doctor {
         this.consultationFee = consultationFee;
     }
 }
-```
