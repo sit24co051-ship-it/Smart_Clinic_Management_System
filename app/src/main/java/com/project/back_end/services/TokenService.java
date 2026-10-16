@@ -1,4 +1,3 @@
-
 package com.project.back_end.services;
 
 import io.jsonwebtoken.Claims;
@@ -16,8 +15,7 @@ public class TokenService {
 
     private final SecretKey secretKey;
 
-    public TokenService(
-            @Value("${jwt.secret}") String secret) {
+    public TokenService(@Value("${jwt.secret}") String secret) {
         this.secretKey = Keys.hmacShaKeyFor(
                 secret.getBytes(StandardCharsets.UTF_8));
     }
