@@ -3,10 +3,11 @@ package com.project.back_end.controllers;
 
 import com.project.back_end.models.Prescription;
 import com.project.back_end.models.PrescriptionRepository;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/prescriptions")
@@ -25,14 +26,27 @@ public class PrescriptionController {
     }
 
     @GetMapping("/{id}")
-    public Optional<Prescription> getPrescriptionById(
+    public ResponseEntity<Prescription> getPrescriptionById(
             @PathVariable Long id) {
-        return prescriptionRepository.findById(id);
+        return prescriptionRepository.findById(id)
+                .map(ResponseEntity::ok)
+                .orElseGet(() -> ResponseEntity.notFound().build());
     }
 
     @PostMapping
-    public Prescription createPrescription(
+    public ResponseEntity<Prescription> createPrescription(
             @RequestBody Prescription prescription) {
-        return prescriptionRepository.save(prescription);
+        Prescription saved = prescriptionRepository.save(prescription);
+        return ResponseEntity.status(HttpStatus.CREATED).body(saved);
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deletePrescription(@PathVariable Long id) {
+        if (!prescriptionRepository.existsById(id)) {
+            return ResponseEntity.notFound().build();
+        }
+
+        prescriptionRepository.deleteById(id);
+        return ResponseEntity.noContent().build();
     }
 }
