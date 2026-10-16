@@ -28,4 +28,28 @@ public class AppointmentService {
     public Optional<Appointment> getAppointmentById(Long appointmentId) {
         return appointmentRepository.findById(appointmentId);
     }
+
+    public Appointment updateAppointment(Long appointmentId,
+                                         Appointment updatedAppointment) {
+        return appointmentRepository.findById(appointmentId)
+                .map(existing -> {
+                    existing.setPatient(updatedAppointment.getPatient());
+                    existing.setDoctor(updatedAppointment.getDoctor());
+                    existing.setAppointmentDateTime(
+                            updatedAppointment.getAppointmentDateTime());
+                    existing.setStatus(updatedAppointment.getStatus());
+                    existing.setReason(updatedAppointment.getReason());
+                    return appointmentRepository.save(existing);
+                })
+                .orElse(null);
+    }
+
+    public boolean deleteAppointment(Long appointmentId) {
+        if (!appointmentRepository.existsById(appointmentId)) {
+            return false;
+        }
+
+        appointmentRepository.deleteById(appointmentId);
+        return true;
+    }
 }
