@@ -1,4 +1,4 @@
-```java
+
 package com.project.back_end.models;
 
 import jakarta.persistence.*;
@@ -72,4 +72,3 @@ public class Prescription {
         return prescribedAt;
     }
 }
-```
