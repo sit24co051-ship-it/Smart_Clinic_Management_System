@@ -1,4 +1,4 @@
-```java
+
 package com.project.back_end.models;
 
 import jakarta.persistence.*;
@@ -85,4 +85,3 @@ public class Patient {
         return createdAt;
     }
 }
-```
